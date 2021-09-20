@@ -6,11 +6,12 @@ let generateSale = function(minCust,maxCust,avgSale) {
     let sales = Math.floor(customers * avgSale);
     return sales;
 }
-/*
-let generateTimeStamp = function(openingHour, hoursOpen) {
-    let time;
+
+let generateTimeStamps = function(Location) {
+    let timeStamps = [];
+    let time = 0;
         //start at opening time and run for numbber of hours open
-        for(let i = openingHour; i <= hoursOpen; i++) {
+        for(let i = Location.openingTime; i < Location.hoursOfOperation + Location.openingTime; i++) {
             if (i < 12) {
                 time = i + "am";
             } else if (i === 12) {
@@ -18,17 +19,11 @@ let generateTimeStamp = function(openingHour, hoursOpen) {
             } else {
                 time = i - 12 + "pm";
             }
+            timeStamps.push(time);
         }
-    return time;
+    return timeStamps;
 }
-
-let generateDailySales = function(location) {
-    let sales = [];
-    for(let i = location.openingTime; i <= location["hoursOfOperation"]; i++) {
-        sales.push(generateSale(location["minCust"],location["maxCust"],location["avgSale"]));
-    }
-}
-
+/*
 let postSalesToPage = function(element, location) {
     let currentLi;
     for(let i = 0; i <= location["salesByHour"].length; i++) {
@@ -60,7 +55,13 @@ let Tokyo = {
     avgSale: 1.2,
     openingTime: 6,
     hoursOfOperation: 14,
-    //salesByHour: []
+    generateSales: function() {
+        let sales = [];
+        for(let i = 0; i < this["hoursOfOperation"]; i++) {
+        sales.push(generateSale(this["minCust"],this["maxCust"],this["avgSale"]));
+        }
+        return sales;
+    }
 }
 
 let Dubai = {
@@ -69,7 +70,13 @@ let Dubai = {
     avgSale: 3.7,
     openingTime: 6,
     hoursOfOperation: 14,
-    //salesByHour: generateDailySales(this)
+    generateSales: function() {
+        let sales = [];
+        for(let i = 0; i < this["hoursOfOperation"]; i++) {
+        sales.push(generateSale(this["minCust"],this["maxCust"],this["avgSale"]));
+        }
+        return sales;
+    }
 }
 
 let Paris = {
@@ -78,7 +85,13 @@ let Paris = {
     avgSale: 2.3,
     openingTime: 6,
     hoursOfOperation: 14,
-    //salesByHour: generateDailySales(this)
+    generateSales: function() {
+        let sales = [];
+        for(let i = 0; i < this["hoursOfOperation"]; i++) {
+        sales.push(generateSale(this["minCust"],this["maxCust"],this["avgSale"]));
+        }
+        return sales;
+    }
 }
 
 let Lima = {
@@ -87,7 +100,18 @@ let Lima = {
     avgSale: 4.6,
     openingTime: 6,
     hoursOfOperation: 14,
-    //salesByHour: generateDailySales(this)
+    generateSales: function() {
+        let sales = [];
+        for(let i = 0; i < this["hoursOfOperation"]; i++) {
+        sales.push(generateSale(this["minCust"],this["maxCust"],this["avgSale"]));
+        }
+        return sales;
+    }
 }
 
-console.log(Seattle.generateSales());
+console.log("Seattle: " + Seattle.generateSales());
+console.log("Tokyo: " + Tokyo.generateSales());
+console.log("Dubai: " + Dubai.generateSales());
+console.log("Paris: " + Paris.generateSales());
+console.log("Lima: " + Lima.generateSales());
+console.log(generateTimeStamps(Seattle));
