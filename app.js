@@ -23,16 +23,25 @@ let generateTimeStamps = function(Location) {
         }
     return timeStamps;
 }
-/*
-let postSalesToPage = function(element, location) {
-    let currentLi;
-    for(let i = 0; i <= location["salesByHour"].length; i++) {
-        element.createElement("<li></li>");
-        currentLi = element.lastChild;
-        currentLi.innerHTML = location.salesByHour[i];
+
+
+let postSalesToPage = function(ul, location) {
+    let timeStamps = generateTimeStamps(location);
+    let salesByHour = location.generateSales();
+    let liContent = [];
+    for(let i = 0; i < timeStamps.length; i++) {
+        let arrEl = [];
+        arrEl.push(timeStamps[i]);
+        arrEl.push(salesByHour[i]);
+        liContent.push(arrEl);
+    }
+    for(let i = 0; i < timeStamps.length; i++) {
+        let listItem = document.createElement('li');
+        listItem.innerText = liContent[i][0] + ": " + liContent[i][1];
+        ul.appendChild(listItem);
     }
 }
-*/
+
 
 let Seattle = {
     minCust: 23,
@@ -42,8 +51,8 @@ let Seattle = {
     hoursOfOperation: 14,
     generateSales: function() {
         let sales = [];
-        for(let i = 0; i < this["hoursOfOperation"]; i++) {
-        sales.push(generateSale(this["minCust"],this["maxCust"],this["avgSale"]));
+        for(let i = 0; i < this.hoursOfOperation; i++) {
+        sales.push(generateSale(this.minCust,this.maxCust,this.avgSale));
         }
         return sales;
     }
@@ -109,9 +118,21 @@ let Lima = {
     }
 }
 
+
 console.log("Seattle: " + Seattle.generateSales());
 console.log("Tokyo: " + Tokyo.generateSales());
 console.log("Dubai: " + Dubai.generateSales());
 console.log("Paris: " + Paris.generateSales());
 console.log("Lima: " + Lima.generateSales());
-console.log(generateTimeStamps(Seattle));
+
+seattleUl = document.getElementById("Seattle");
+tokyoUl = document.getElementById("Tokyo");
+dubaiUl = document.getElementById("Dubai");
+parisUl = document.getElementById("Paris");
+limaUl = document.getElementById("Lima");
+
+postSalesToPage(seattleUl,Seattle);
+postSalesToPage(tokyoUl, Tokyo);
+postSalesToPage(dubaiUl, Dubai);
+postSalesToPage(parisUl, Paris);
+postSalesToPage(limaUl, Lima);
