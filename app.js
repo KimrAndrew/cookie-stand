@@ -1,138 +1,158 @@
-let generateSale = function(minCust,maxCust,avgSale) {
+let Locations = [];
+let hourlyTotals = [];
+
+//Generates a random number of customers within a range based upon the objects data
+generateSale = function(location) {
     //generate customers for the hour
     //generate random number of customers between the minimum and maximum limits
-    let customers = Math.floor(Math.random() * (maxCust - minCust + 1)) + minCust;
+    let customers = Math.floor(Math.random() * (location.maxCust - location.minCust + 1)) + location.minCust;
+    //console.log(location.maxCust);
     //generate cookie sales from customer attendance and average number of cookies sold
-    let sales = Math.floor(customers * avgSale);
-    return sales;
-}
+    let sale = Math.floor(customers * location.avgSale);
+    //console.log(sale);
+    return sale;
+},
 
-let generateTimeStamps = function(Location) {
-    let timeStamps = [];
-    let time = 0;
-        //start at opening time and run for numbber of hours open
-        for(let i = Location.openingTime; i < Location.hoursOfOperation + Location.openingTime; i++) {
-            if (i < 12) {
-                time = i + "am";
-            } else if (i === 12) {
-                time = i + "pm";
-            } else {
-                time = i - 12 + "pm";
-            }
-            timeStamps.push(time);
+
+//Constructor function for Shop objects
+Shop = function(name,minCust,maxCust,avgSale) {
+    this.name = name;
+    this.minCust = minCust;
+    this.maxCust = maxCust;
+    this.avgSale = avgSale;
+    this.salesByHour = [];
+    this.generateSales = function() {
+        //console.log('generating sales');
+        for(let i = 0; i < this.hours.length; i++) {
+
+        let sale = generateSale(this);
+        //console.log(sale);
+        this.salesByHour.push(sale);
         }
-    return timeStamps;
+    }
+};
+
+Shop.prototype.numLocations = Locations.length;
+
+Shop.prototype.hours = ["6 am","7 am","8 am",'9 am', '10 am', '11 am',
+'12 pm', '1 pm', '2 pm', '3 pm', '4 pm', '5 pm', '6 pm', '7 pm'];
+
+
+//Renders the table header on the webpage
+renderTableHead = function() {
+    let table = document.getElementById('Sales');
+    let thead = document.createElement('thead');
+    let tr = document.createElement('tr');
+    tr.appendChild(document.createElement('th'));
+    for (let i = 0; i < Shop.prototype.hours.length; i++) {
+        let th = document.createElement('th');
+        th.innerHTML = Shop.prototype.hours[i];
+        tr.appendChild(th);
+    }
+    let th = document.createElement('th');
+    th.innerHTML = "Daily Location Total";
+    tr.appendChild(th);
+    thead.appendChild(tr)
+    table.appendChild(thead);
+}
+
+//Render the table body on the webpage
+Shop.prototype.render = function() {
+    let table = document.getElementById('Sales');
+    let tbody = document.createElement('tbody');
+    let tr = document.createElement('tr');
+    let th = document.createElement('th');
+    th.innerHTML = this.name;
+    tr.appendChild(th);
+    for(let i = 0; i < Shop.prototype.hours.length; i++) {
+        let td = document.createElement('td');
+        td.innerHTML = this.salesByHour[i];
+        tr.appendChild(td);
+    }
+
+    let total = 0;
+    for(let i = 0; i < this.salesByHour.length; i++) {
+        total += this.salesByHour[i];
+    }
+    let td = document.createElement('td');
+    td.innerHTML = total;
+    tr.appendChild(td);
+    table.appendChild(tr);
 }
 
 
-let postSalesToPage = function(ul, location) {
-    let timeStamps = generateTimeStamps(location);
-    let salesByHour = location.generateSales();
-    let liContent = [];
-    for(let i = 0; i < timeStamps.length; i++) {
-        let arrEl = [];
-        arrEl.push(timeStamps[i]);
-        arrEl.push(salesByHour[i]);
-        liContent.push(arrEl);
-    }
-    for(let i = 0; i < timeStamps.length; i++) {
-        let listItem = document.createElement('li');
-        listItem.innerText = liContent[i][0] + ": " + liContent[i][1];
-        ul.appendChild(listItem);
-    }
-}
+
+let Seattle = new Shop('Seattle',23,65,6.3);
+Seattle.generateSales();
+Locations.push(Seattle);
 
 
-let Seattle = {
-    minCust: 23,
-    maxCust: 65,
-    avgSale: 6.3,
-    openingTime: 6,
-    hoursOfOperation: 14,
-    generateSales: function() {
-        let sales = [];
-        for(let i = 0; i < this.hoursOfOperation; i++) {
-        sales.push(generateSale(this.minCust,this.maxCust,this.avgSale));
+let Tokyo = new Shop('Tokyo',3,24,1.2);
+Tokyo.generateSales();
+Locations.push(Tokyo);
+
+let Dubai = new Shop('Dubai',11,38,3.7);
+Dubai.generateSales();
+Locations.push(Dubai);
+
+let Paris = new Shop('Paris',20,38,3.2);
+Paris.generateSales();
+Locations.push(Paris);
+
+let Lima = new Shop('Lima',2,16,4.7);
+Lima.generateSales();
+Locations.push(Lima);
+
+//Calculates the total cookies sold between locations for each hour of operation
+let calcHourlyTotal = function(locationArr) {
+    for(let i = 0; i < Shop.prototype.hours.length;i++) {
+        let total = 0;
+        for(let j = 0; j < locationArr.length; j++) {
+            total += locationArr[j].salesByHour[i];
         }
-        return sales;
+        hourlyTotals.push(total);
     }
 }
 
-let Tokyo = {
-    minCust: 3,
-    maxCust: 24,
-    avgSale: 1.2,
-    openingTime: 6,
-    hoursOfOperation: 14,
-    generateSales: function() {
-        let sales = [];
-        for(let i = 0; i < this["hoursOfOperation"]; i++) {
-        sales.push(generateSale(this["minCust"],this["maxCust"],this["avgSale"]));
-        }
-        return sales;
+//Calculates the grand total for sales made between all stores
+let calcGrandTotal = function() {
+    total = 0;
+    for(let i = 0; i < hourlyTotals.length; i++) {
+        total += hourlyTotals[i];
     }
+    //console.log("grand total" + total);
+    return total;
 }
 
-let Dubai = {
-    minCust: 11,
-    maxCust: 38,
-    avgSale: 3.7,
-    openingTime: 6,
-    hoursOfOperation: 14,
-    generateSales: function() {
-        let sales = [];
-        for(let i = 0; i < this["hoursOfOperation"]; i++) {
-        sales.push(generateSale(this["minCust"],this["maxCust"],this["avgSale"]));
-        }
-        return sales;
+let renderTableFooter = function() {
+    let table = document.getElementById('Sales');
+    let tfoot = document.createElement('tfoot');
+    let tr = document.createElement('tr');  
+    let th = document.createElement('th')
+    th.innerHTML = "Total";
+    tr.appendChild(th);
+    for(let i = 0; i < hourlyTotals.length; i++) {
+        let td = document.createElement('td');
+        td.innerHTML = hourlyTotals[i];
+        tr.appendChild(td);
     }
+    let td = document.createElement('td');
+    td.innerHTML = calcGrandTotal();
+    tr.appendChild(td);
+    tfoot.appendChild(tr);
+    table.appendChild(tfoot);
+
 }
 
-let Paris = {
-    minCust: 20,
-    maxCust: 38,
-    avgSale: 2.3,
-    openingTime: 6,
-    hoursOfOperation: 14,
-    generateSales: function() {
-        let sales = [];
-        for(let i = 0; i < this["hoursOfOperation"]; i++) {
-        sales.push(generateSale(this["minCust"],this["maxCust"],this["avgSale"]));
-        }
-        return sales;
-    }
-}
+calcHourlyTotal(Locations);
+//console.log(hourlyTotals);
 
-let Lima = {
-    minCust: 2,
-    maxCust: 16,
-    avgSale: 4.6,
-    openingTime: 6,
-    hoursOfOperation: 14,
-    generateSales: function() {
-        let sales = [];
-        for(let i = 0; i < this["hoursOfOperation"]; i++) {
-        sales.push(generateSale(this["minCust"],this["maxCust"],this["avgSale"]));
-        }
-        return sales;
-    }
-}
+renderTableHead();
 
+Seattle.render();
+Tokyo.render();
+Dubai.render();
+Paris.render();
+Lima.render();
 
-console.log("Seattle: " + Seattle.generateSales());
-console.log("Tokyo: " + Tokyo.generateSales());
-console.log("Dubai: " + Dubai.generateSales());
-console.log("Paris: " + Paris.generateSales());
-console.log("Lima: " + Lima.generateSales());
-
-seattleUl = document.getElementById("Seattle");
-tokyoUl = document.getElementById("Tokyo");
-dubaiUl = document.getElementById("Dubai");
-parisUl = document.getElementById("Paris");
-limaUl = document.getElementById("Lima");
-
-postSalesToPage(seattleUl,Seattle);
-postSalesToPage(tokyoUl, Tokyo);
-postSalesToPage(dubaiUl, Dubai);
-postSalesToPage(parisUl, Paris);
-postSalesToPage(limaUl, Lima);
+renderTableFooter();
