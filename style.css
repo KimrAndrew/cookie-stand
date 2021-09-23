@@ -1,0 +1,94 @@
+header {
+    width: 100vw;
+    height: 160px;
+    background-image: url(https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1674&q=80);
+}
+header h1 {
+    position: relative;
+    bottom: 20px;
+    display: inline-block;
+    color: white;
+    font-size: 40px;
+}
+header img {
+    position: relative;
+    top: 20px;
+    width: 260px;
+    height:auto;
+    margin: 20px;
+}
+#logo-box {
+    width: 960px;
+    margin: auto;
+}
+main {
+    width: 960px;
+    margin: auto;
+    background-color: #727d8a;
+}
+h2 {
+    font-size: 30px;
+    margin: 20px 0;
+    color: white;
+}
+section{
+    box-sizing: border-box;
+    text-align: center;
+}
+#about {
+    position: relative;
+    display: inline-block;
+    width: 30%;
+    margin-right:20px;
+    bottom: 295px;
+}
+#about img {
+    width: 100%;
+}
+#about p {
+    color: white;
+}
+#cookies {
+    position:relative;
+    bottom:160px;
+    width:30%;
+    margin-right: 20px;
+    display: inline-block;
+}
+#cookies img {
+    margin-bottom: 20px;
+}
+.cookie-card {
+    display:block;
+}
+article {
+    margin-top: 20px;
+    height: 150px;
+    overflow:scroll;
+}
+#merch {
+    display:inline-block;
+    width: 30%;
+    margin-right:20px;
+}
+
+footer {
+    height: 200px;
+    background-image: url(https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1674&q=80);
+}
+#footer-content {
+    width: 960px;
+    margin: auto;
+    text-align:center;
+}
+footer ul {
+    font-size: 25px;
+    padding: 20px;
+}
+footer li {
+    display:inline;
+    padding: 20px;
+}
+footer ul, footer li {
+    color: white;
+}
