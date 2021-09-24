@@ -130,6 +130,8 @@ let calcGrandTotal = function() {
 }
 
 let renderTableFooter = function() {
+    hourlyTotals=[];
+    calcHourlyTotal(Locations);
     let table = document.getElementById('Sales');
     let tfoot = document.createElement('tfoot');
     let tr = document.createElement('tr');  
@@ -149,7 +151,14 @@ let renderTableFooter = function() {
 
 }
 
-calcHourlyTotal(Locations);
+let updateTableFooter = function() {
+    let removeEl = document.querySelector("tfoot");
+    let parentEl = document.getElementById("Sales");
+    parentEl.removeChild(removeEl);
+    renderTableFooter();
+}
+
+//calcHourlyTotal(Locations);
 //console.log(hourlyTotals);
 
 let createNewLocation = function(formSubmission) {
@@ -164,6 +173,7 @@ let createNewLocation = function(formSubmission) {
     newShop.generateSales();
     console.log(newShop);
     newShop.render();
+    updateTableFooter();
 }
 
 let locationForm = document.getElementById('location-form');
