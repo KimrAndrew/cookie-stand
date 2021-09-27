@@ -1,0 +1,102 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@700&display=swap');
+
+body {
+    background-color: burlywood;
+}
+main {
+    width: 960px;
+    margin: 0 auto;
+}
+
+form {
+    margin-top: 30px;
+    border: 2px solid black;
+}
+
+header {
+    width: 100vw;
+    height: 160px;
+    background-image: url(https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1674&q=80);
+}
+header h1 {
+    position: relative;
+    bottom: 20px;
+    display: inline-block;
+    color: white;
+    font-size: 35px;
+    font-family: "Kalam", cursive;
+}
+header img {
+    position: relative;
+    top: 20px;
+    width: 260px;
+    height:auto;
+    margin: 20px;
+}
+
+#logo-box {
+    width: 960px;
+    margin: auto;
+}
+nav {
+    width:100vw;
+    height: 40px;
+    background-color: brown;
+    text-align: center;
+}
+li {
+    display: inline-block;
+    padding: 0px 60px;
+}
+a {
+    position: relative;
+    top: 5px;
+    color: white;
+    font-size: 24px;
+}
+form {
+    text-align: center;
+    margin-bottom: 30px;
+}
+input {
+    margin: 15px 15px 15px 0px;
+}
+
+th {
+    border: 2px solid green;
+}
+
+th {
+    padding: 10px;
+    background-color: brown;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+td {
+    border: 2px solid green;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+button {
+    width: 100px;
+    padding: 10px;
+    background-color: lightblue;
+}
+table {
+    width: 960px;
+    border: 2px solid green;
+    border-collapse: collapse;
+
+}
+
+tr {
+    background-color: burlywood;
+}
+
+footer {
+    margin-top: 30px;
+    height: 160px;
+    background-image: url(https://images.unsplash.com/photo-1476231682828-37e571bc172f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1674&q=80);
+}
