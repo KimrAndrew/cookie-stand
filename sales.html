@@ -12,6 +12,19 @@
         </header>
 
         <main>
+            <form id="location-form">
+                <fieldset>
+                    <label>Location Name</label>
+                    <input name="locationName" type="text" required>
+                    <label>Minimum Customers</label>
+                    <input name="minCust" type="number" required>
+                    <label>Maximum Customers</label>
+                    <input name="maxCust" type="number" required>
+                    <label>Average Cookies Per Sale</label>
+                    <input name="avgSale" type="number" step=".01">
+                    <button>Submit!</button>
+                </fieldset>
+            </form>
 
             <table id="Sales">
 
